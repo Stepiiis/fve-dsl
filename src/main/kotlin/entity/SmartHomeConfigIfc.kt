@@ -48,10 +48,9 @@ data object FVEConfig : SmartHomeConfigIfc {
         return this
     }
 
-    @Suppress("CANDIDATE_CHOSEN_USING_OVERLOAD_RESOLUTION_BY_LAMBDA_ANNOTATION")
     override fun getDevices(): List<Node> {
-        return familyDict.flatMap { (_, v) ->
-            return v.getNodes()
+        return familyDict.values.flatMap{
+            it.getNodes()
         }
     }
 
