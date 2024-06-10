@@ -16,18 +16,18 @@ fun emitComparingImpl(lhs: Any, rhs: Any, lessThan: Boolean = true){
         emitAfterTime(rhs);
     } else {
         if (lhs is Node) {
-            // todo emit config to get node value
+            TODO("emit config to get node value")
         } else {
-            // todo emit value
+            TODO("emit value")
         }
         if(lessThan)
         // emit less than
         else
         // emit more than
             if (rhs is Node) {
-                // todo emit config to get node value
+                TODO("emit config to get node value")
             } else {
-                // todo emit value
+                TODO("emit value")
             }
     }
 }
@@ -88,13 +88,13 @@ infix fun Any.lessThan(that: Any): Unit{
 
 
 fun emitAfterTime(rhs: LocalDateTime) {
-    // todo emit config to compare current time with hour and minute of day
+    TODO(" emit config to compare current time with hour and minute of day")
 }
 
 fun emitBeforeTime(rhs: LocalDateTime){
-    // todo emit config to compare current time with hour and minute of day
+    TODO(" emit config to compare current time with hour and minute of day")
 }
 
 fun emitTimeEquals(time: LocalDateTime){
-    // todo emit config to compare current time with hour and minute of day
+    TODO(" emit config to compare current time with hour and minute of day")
 }

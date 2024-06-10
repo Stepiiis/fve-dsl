@@ -3,7 +3,7 @@ package fit.bikot.dsl.fve.entity
 import fit.bikot.dsl.fve.enums.ProtocolTypeEnum
 import fit.bikot.dsl.fve.enums.ProtocolTypeEnum.*
 
-abstract class Node{
+abstract class Node {
     private val eventList = mutableListOf<Event>()
     var reductionFunction: (() -> Unit)? = null
     lateinit var endpoint: String
@@ -22,13 +22,13 @@ abstract class Node{
         this.reductionFunction = reductionFunction
     }
 
-    fun reducePower(){
+    fun reducePower() {
         reductionFunction?.invoke()
     }
 }
 
-fun createNode(protocol: ProtocolTypeEnum): Node{
-    return when(protocol){
+fun createNode(protocol: ProtocolTypeEnum): Node {
+    return when (protocol) {
         MQTT -> MQTTNode()
         Matter -> TODO()
         ZIGBEE -> TODO()
@@ -38,11 +38,12 @@ fun createNode(protocol: ProtocolTypeEnum): Node{
     }
 }
 
-class MQTTNode: Node() {
+class MQTTNode : Node() {
     override fun send(value: Any): Boolean {
         TODO("Emit config to send current value to MQTT endpoint.")
     }
-    override fun get(): Any{
+
+    override fun get(): Any {
         TODO("Emit config to read current value from MQTT endpoint")
     }
 }

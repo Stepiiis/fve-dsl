@@ -25,15 +25,15 @@ data object FVEConfig : SmartHomeConfigIfc {
     private val behaviors: MutableList<IBehavior> = arrayListOf()
 
     override fun addFamily(family: NodeFamily): SmartHomeConfigIfc {
-        if(familyDict.containsKey(family.type))
+        if (familyDict.containsKey(family.type))
             throw UnsupportedOperationException("Duplicate family type defined. type = " + family.type)
         this.familyDict[family.type] = family
         return this
     }
 
-    override fun family(type: NodeFamilyTypeEnum, initializer: NodeFamily.() -> Unit){
+    override fun family(type: NodeFamilyTypeEnum, initializer: NodeFamily.() -> Unit) {
         val nodeFamily = NodeFamily(type);
-        nodeFamily.apply{
+        nodeFamily.apply {
             initializer()
         }
         addFamily(nodeFamily)
@@ -41,7 +41,7 @@ data object FVEConfig : SmartHomeConfigIfc {
 
     override fun behavior(name: String, initializer: IBehavior.() -> Unit): SmartHomeConfigIfc {
         val behaviour = Behavior(name)
-        behaviour.apply{
+        behaviour.apply {
             initializer()
         }
         behaviors.add(behaviour)
@@ -49,17 +49,17 @@ data object FVEConfig : SmartHomeConfigIfc {
     }
 
     @Suppress("CANDIDATE_CHOSEN_USING_OVERLOAD_RESOLUTION_BY_LAMBDA_ANNOTATION")
-    override fun getDevices(): List<Node>{
-        return familyDict.flatMap{ (_,v)->
+    override fun getDevices(): List<Node> {
+        return familyDict.flatMap { (_, v) ->
             return v.getNodes()
         }
     }
 
     override fun getAdjustableDevices(): List<Node> {
-        return getDevices().filter{it.adjustable}
+        return getDevices().filter { it.adjustable }
     }
 
-    fun nodeValue(family: NodeFamilyTypeEnum, nodeName: String){
+    fun nodeValue(family: NodeFamilyTypeEnum, nodeName: String) {
         familyDict[family]?.getNode(nodeName);
     }
 
