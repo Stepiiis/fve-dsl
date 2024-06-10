@@ -4,7 +4,7 @@ import fit.bikot.dsl.fve.enums.ProtocolTypeEnum
 import fit.bikot.dsl.fve.enums.ProtocolTypeEnum.*
 
 abstract class Node{
-    private val events = mutableListOf<Event>()
+    private val eventList = mutableListOf<Event>()
     var reductionFunction: (() -> Unit)? = null
     lateinit var endpoint: String
     lateinit var name: String
@@ -12,7 +12,7 @@ abstract class Node{
 
     fun onEvent(eventType: String, action: Event.() -> Unit) {
         val event = Event(eventType, this).apply(action)
-        events.add(event)
+        eventList.add(event)
     }
 
     abstract fun send(value: Any): Boolean

@@ -4,6 +4,8 @@ import fit.bikot.dsl.fve.entity.Node
 import java.time.Instant
 import java.time.LocalDateTime
 
+data object Now
+
 fun atTime(hours: Int, minutes: Int) {
     val time = LocalDateTime.of(0,0,0,hours,minutes)
     emitTimeEquals(time);
@@ -96,8 +98,3 @@ fun emitBeforeTime(rhs: LocalDateTime){
 fun emitTimeEquals(time: LocalDateTime){
     // todo emit config to compare current time with hour and minute of day
 }
-
-
-object Sunset {}
-
-object Now {}

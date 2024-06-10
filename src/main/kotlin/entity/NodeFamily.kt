@@ -4,21 +4,21 @@ import fit.bikot.dsl.fve.enums.NodeFamilyTypeEnum
 import fit.bikot.dsl.fve.enums.ProtocolTypeEnum
 
 class NodeFamily(val type: NodeFamilyTypeEnum){
-    private val nodes: MutableMap<String, Node> = mutableMapOf()
+    private val nodeDict: MutableMap<String, Node> = mutableMapOf()
 
     fun getNode(name: String): Node? {
-        return nodes[name];
+        return nodeDict[name];
     }
 
     fun getNodes(): List<Node>{
-        return nodes.values.toList();
+        return nodeDict.values.toList();
     }
 
-    fun addNode(node: Node): NodeFamily {
-        if(nodes.containsKey(node.name)){
+    private fun addNode(node: Node): NodeFamily {
+        if(nodeDict.containsKey(node.name)){
             throw UnsupportedOperationException("Cannot add node with duplicate name.")
         }
-        this.nodes[node.name] = node
+        this.nodeDict[node.name] = node
         return this
     }
 

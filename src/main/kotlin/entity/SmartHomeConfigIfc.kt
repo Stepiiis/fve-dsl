@@ -11,6 +11,9 @@ sealed interface SmartHomeConfigIfc {
     fun getAdjustableDevices(): List<Node>
 }
 
+/**
+ * Factory function "constructor" because we need to have an existing FVEConfig instance in the lambda closure
+ */
 fun FVEConfig(initializer: FVEConfig.() -> Unit): FVEConfig {
     val config = FVEConfig
     config.initializer()
@@ -18,13 +21,13 @@ fun FVEConfig(initializer: FVEConfig.() -> Unit): FVEConfig {
 }
 
 data object FVEConfig : SmartHomeConfigIfc {
-    private val families: MutableMap<NodeFamilyTypeEnum, NodeFamily> = mutableMapOf()
-    private val behaviours: MutableList<IBehavior> = arrayListOf()
+    private val familyDict: MutableMap<NodeFamilyTypeEnum, NodeFamily> = mutableMapOf()
+    private val behaviors: MutableList<IBehavior> = arrayListOf()
 
     override fun addFamily(family: NodeFamily): SmartHomeConfigIfc {
-        if(families.containsKey(family.type))
+        if(familyDict.containsKey(family.type))
             throw UnsupportedOperationException("Duplicate family type defined. type = " + family.type)
-        this.families[family.type] = family
+        this.familyDict[family.type] = family
         return this
     }
 
@@ -41,13 +44,14 @@ data object FVEConfig : SmartHomeConfigIfc {
         behaviour.apply{
             initializer()
         }
-        behaviours.add(behaviour)
+        behaviors.add(behaviour)
         return this
     }
 
-    override fun getDevices(): List<Node> {
-        return families.map{
-           return it.value.getNodes()
+    @Suppress("CANDIDATE_CHOSEN_USING_OVERLOAD_RESOLUTION_BY_LAMBDA_ANNOTATION")
+    override fun getDevices(): List<Node>{
+        return familyDict.flatMap{ (_,v)->
+            return v.getNodes()
         }
     }
 
@@ -56,7 +60,7 @@ data object FVEConfig : SmartHomeConfigIfc {
     }
 
     fun nodeValue(family: NodeFamilyTypeEnum, nodeName: String){
-        families[family]?.getNode(nodeName);
+        familyDict[family]?.getNode(nodeName);
     }
 
     fun notification(s: String) {
